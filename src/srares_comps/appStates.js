@@ -2,20 +2,18 @@ import React , {useState, useEffect} from 'react';
 import Main from './main';
 import Header from './header';
 import Nav from './nav';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { render } from '@testing-library/react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 function AppStates(props)
 {
-    let [name , setName] = useState("israel");
-    
     return(
-        <div >
+        <div>
             <Router>
                 <Header/>
-                <Nav setName={setName} />
-                <Switch>
-                    <Main setName={setName} name={name}/>
-                </Switch>
+                <Nav/>
+                <Route exact path="/" component={Main}/>
+                <Route exact path="/country/" component={Main}/>
+                <Route exact path="/country/:name" component={Main}/>
+                <Route exact path="/code/:code" component={Main}/>
             </Router>
         </div> 
     )

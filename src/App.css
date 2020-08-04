@@ -13,24 +13,9 @@ header{
     background-size: cover;
     background-position: center;  
 }  
-  
-.map{
-    width: 1100px;
-    height: 50;
-    overflow: hidden;
-    border: silver solid 2px;
-    padding: 0;
-    margin-top: 10px;
-}
+
 
 .leaflet-container {
-    padding: 0;
-    margin: 0;
+    width: 100%;
+    height: 100vh;
 }
-
-.card{
-    padding: 0;
-    margin: 0;
-    width: 220px;
-}
-  

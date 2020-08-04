@@ -1,15 +1,17 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function Nav(props)
 {
     const val = useRef("");
+    let history = useHistory();
 
     const search = () =>
     {
         if(val.current.value != "")
         {
-            props.setName(val.current.value);
+            history.push("/country/"+val.current.value);
+            val.current.value = ""; 
         }
         else
         {
@@ -19,15 +21,15 @@ function Nav(props)
     return(
         <nav className="container d-flex justify-content-around">  
             <div className="row">
-                <Link onClick={()=>props.setName("israel")} className="btn btn-light" to="/Israel">Isreal</Link>
-                <Link onClick={()=>props.setName("usa")} className="btn btn-light" to="/Usa">U.S.A</Link>
-                <Link onClick={()=>props.setName("uk")} className="btn btn-light" to="/Uk">U.K</Link>
-                <Link onClick={()=>props.setName("Russian Federation")} className="btn btn-light" to="/Russian%22Federation">Russian</Link>
+                <Link to={"/country/israel"} className="btn btn-light">Isreal</Link>
+                <Link to={"/country/usa"} className="btn btn-light">U.S.A</Link>
+                <Link to={"/country/uk"} className="btn btn-light">U.K</Link>
+                <Link to={"/country/China"} className="btn btn-light" >China</Link>
             </div>
             <div className="col-lg-6">
                 <div className="row">
                     <input ref={val} className="col-lg-8 form-control" type="text" placeholder="Search state..."/>
-                    <Link onClick={search} className="btn btn-primary ml-3"  to={"/"+val.current.value}>Found</Link>
+                    <Link onClick={search} className="btn btn-primary ml-3">Found</Link>
                 </div>
             </div>
         </nav> 

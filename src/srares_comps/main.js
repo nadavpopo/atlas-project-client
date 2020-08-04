@@ -3,8 +3,9 @@ import ItemState from './itemState';
 import { doApiGet } from '../services/apiService';
 function Main(props)
 {
-    let [state_ar,setState] = useState([]);
+    let [state,setState] = useState(null);
     let [allStateArr,setAllStateArr] = useState([]);
+    let [name , setName] = useState("israel");
 
     useEffect(()=>
     {
@@ -19,24 +20,38 @@ function Main(props)
 
     useEffect(() =>
     {
-        let url = "https://restcountries.eu/rest/v2/name/"+props.name+"?fullText=true" 
+        let url = "https://restcountries.eu/rest/v2/name/"+name+"?fullText=true"; 
+
+        if(props.match)
+        {
+            if(props.match.params.name)
+            {
+                url = "https://restcountries.eu/rest/v2/name/"+props.match.params.name+"?fullText=true"; 
+            }
+            if(props.match.params.code)
+            {
+                url = "https://restcountries.eu/rest/v2/alpha/"+props.match.params.code; 
+            }
+        }
 
         doApiGet(url)
         .then(data =>
         {
-            setState(data);
+            if(props.match.params.code)
+            {
+                setState(data);
+            }
+            else
+            {
+                setState(data[0]);
+            }
         })
-    },[props.name])
+    },[props.match])
 
     return(
         <div className="container mt-4"> 
-           {(state_ar.length>0)? state_ar.map(item =>
-                {
-                    return(
-                        <ItemState item={item} key={item.callingCodes[0]} allStateArr={allStateArr}  setName={props.setName}/>
-                    )
-            }) :"Not found"}
-        </div> 
+        {(state)? <ItemState item={state} allStateArr={allStateArr}/>:"Not found."}
+    </div> 
     )
 }
 
